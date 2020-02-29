@@ -1,0 +1,35 @@
+{
+  "index_ patterns": "blog",
+  "settings": {
+    "analysis": {
+      "tokenizer": {
+        "kuromoji": { "type": "kuromoji_ tokenizer", "mode": "search" }
+      },
+      "analyzer": {
+        "kuromoji-analyzer": {
+          "type": "custom",
+          "tokenizer": "kuromoji",
+          "filter": ["ja_ stop", "kuromoji_ part_ of_ speech", "lowercase"],
+          "char_ filter": ["html_ strip"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "blog": {
+      "properties": {
+        "body": {
+          "type": "text",
+          "fielddata": true,
+          "analyzer": "kuromoji-analyzer"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "kuromoji-analyzer",
+          "fielddata": true,
+          "fields": { "keyword": { "type": "keyword" } }
+        }
+      }
+    }
+  }
+}
